@@ -13,7 +13,7 @@ def kmer(x: str, k: int) -> list[str]:
     """
     result = []
     for i in range(0, len(x)-k):
-        result.append(kmer[i:i+k])
+        result.append(x[i:i+k])
     return result
 
 
