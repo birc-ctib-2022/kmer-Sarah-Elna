@@ -4,6 +4,8 @@
 def kmer(x: str, k: int) -> list[str]:
     """
     Computer all k-mers of x.
+    k must be positive and not zero.
+    k must also be smaller than the length of x.
 
     >>> kmer('agtagtcg', 3)
     ['agt', 'gta', 'tag', 'agt', 'gtc', 'tcg']
@@ -11,6 +13,8 @@ def kmer(x: str, k: int) -> list[str]:
     >>> kmer('ACGTCC', 2)
     ['AC', 'CG', 'GT', 'TC', 'CC']
     """
+    if k <= 0 or k > len(x):
+        raise Except('NO! Bad k.')
     result = []
     for i in range(0, len(x)-k+1):
         result.append(x[i:i+k])
@@ -27,13 +31,11 @@ def unique_kmers(x: str, k: int) -> list[str]:
     >>> unique_kmers('AAATAAGAAC', 2)
     ['AA', 'AT', 'TA', 'AG', 'GA', 'AC']
     """
-    result = []
+    result = set()
     kmer_list = kmer(x, k)
-    for i in range(0, len(kmer_list)):
-        if kmer_list[i] not in result:
-            result.append(kmer_list[i])
-        else:
-            continue
+    for kmer_i in kmer_list:
+        if kmer_i not in result:
+            result.add(kmer_i)
     return result
 
 
@@ -47,12 +49,11 @@ def count_kmers(x: str, k: int) -> dict[str, int]:
     """
     result = {}
     unique_kmer_list = unique_kmers(x, k)
-    for i in range(0, len(unique_kmer_list)):
-        search_kmer = unique_kmer_list[i]
+    for unique_kmer in unique_kmer_list:
         search_count = 0
         for i in range(0, len(x)-k+1):
-            if search_kmer == x[i:i+k]:
+            if unique_kmer == x[i:i+k]:
                 search_count += 1
-        result[search_kmer] = search_count
+        result[unique_kmer] = search_count
     return result
             
