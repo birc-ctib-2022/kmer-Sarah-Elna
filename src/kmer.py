@@ -14,7 +14,7 @@ def kmer(x: str, k: int) -> list[str]:
     ['AC', 'CG', 'GT', 'TC', 'CC']
     """
     if k <= 0 or k > len(x):
-        raise Except('NO! Bad k.')
+        raise Exception('NO! Bad k.')
     result = []
     for i in range(0, len(x)-k+1):
         result.append(x[i:i+k])
@@ -25,11 +25,11 @@ def unique_kmers(x: str, k: int) -> list[str]:
     """
     Computer all unique k-mers of x.
 
-    >>> unique_kmers('agtagtcg', 3)
-    ['agt', 'gta', 'tag', 'gtc', 'tcg']
+    >>> unique_kmers('agtagtcg', 3) == {'tag', 'agt', 'gta', 'gtc', 'tcg'}
+    True
 
-    >>> unique_kmers('AAATAAGAAC', 2)
-    ['AA', 'AT', 'TA', 'AG', 'GA', 'AC']
+    >>> unique_kmers('AAATAAGAAC', 2) == {'AC', 'AG', 'GA', 'AA', 'TA', 'AT'}
+    True
     """
     result = set()
     kmer_list = kmer(x, k)
@@ -44,10 +44,10 @@ def count_kmers(x: str, k: int) -> dict[str, int]:
     """
     Computer all k-mers of x and count how often they appear.
 
-    >>> count_kmers('tttaaatttaaa', 3)
-    {'ttt': 2, 'tta': 2, 'taa': 2, 'aaa': 2, 'aat': 1, 'att': 1}
+    >>> count_kmers('tttaaatttaaa', 3) == {'aaa': 2, 'tta': 2, 'ttt': 2, 'taa': 2, 'att': 1, 'aat': 1}
+    True
     """
-    result = {}
+    result = dict()
     unique_kmer_list = unique_kmers(x, k)
     for unique_kmer in unique_kmer_list:
         search_count = 0
